@@ -1,0 +1,41 @@
+***************** OSM2APOLLOOPENDRIVE *******************
+
+1. Exporter les données cartographique de la zone souhaitée sur le site OSM
+
+===> fichier avec exention ".osm" 
+
+2. Déplacez-le dans le repertoire du projet osm2opendrive 
+
+3. Dans un terminale lancer la commande qui gènère le fichier Apollo open-drive sous un format .XML
+
+	$ python3 osm2od.py "données-carte" -z "zone" (31T pour toulouse)
+
+4. Créer un sous-répertoire dans /apollo/modules/map/data (emplacement où sera stocker les cartes)
+
+===> Copier le fichier .XML dans ce sous répertoire 
+
+5. Générer "base_map" qui répresente la carte la plus complète dans apollo contenant toute les routes:
+
+	$ ./bazel-bin/modules/map/tools/proto_map_generator -- map_dir=[map-path] --output_dir=[map-path]
+
+===> [map-path] designe le sous-répertoire créer ci-dessus, deux fichiers base_map (.txt et .bin) seront générés
+
+6. Générer "routing_map" qui répresente la carte de routage avec la topologie des voies dans base_map:
+
+	$ ./scripts/generate_routing_topo_graph.sh --map_dir=[map-path]
+
+ ===> [map-path] designe le sous-répertoire créer ci-dessus, deux fichiers routing_map (.txt et .bin) seront générés
+ 
+7. Générer "sim_map" qui répresente une version allégée de base_map pour la visualisation sur Dreamview:
+
+	$ ./bazel-bin/modules/map/tools/sim_map_generator -- map_dir=[map-path] --output_dir=[map-path]
+
+===> [map-path] designe le sous-répertoire créer ci-dessus, deux fichiers sim_map (.txt et .bin) seront générés
+
+
+8. Vérification 
+
+	$ bash apollo.sh build_gpu 
+	$ bash scripts/bootstrap.sh start 
+
+===> Puis aller dans l'onglet MAP pour voir la carte  

@@ -1,0 +1,48 @@
+***************Installations des packages******************
+
+1) numpy 
+$ sudo apt-get install python3-numpy
+
+2) argparse
+Installer par défault dans les modules de python
+
+3) tqdm
+$ sudo apt-get install -y python3-tqdm
+
+4) utm 
+$ pip install utm
+
+5) geopy
+$ pip install geopy
+
+6) lxml
+$ sudo apt-get install python3-lxml
+
+
+***************Vérification des packages******************
+1) numpy, argparse et tqdm: 
+
+abdoul@HP-ENVY:~$ python
+Python 3.6.9 (default, Oct  8 2020, 12:12:24) 
+[GCC 8.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+
+>>> import argparse
+>>> argparse.__version__
+'1.1'
+
+>>> import numpy
+>>> numpy.version.version
+'1.13.3'
+
+>>> tqdm.__version__
+'4.19.5'
+>>> 
+
+2) utm et geopy
+$ pip show utm
+$ pip show geopy
+
+3) lxml
+$ dpkg --get-selections | grep lxml
+
